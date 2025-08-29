@@ -10,6 +10,9 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 # Tavily Search API Key (for web search capabilities)
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
+# Mem0 API Key (for persistent memory)
+MEM0_API_KEY = os.getenv("MEM0_API_KEY")
+
 # LangSmith configuration (optional)
 LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
 LANGSMITH_PROJECT = os.getenv("LANGSMITH_PROJECT", "athena-family-assistant")
@@ -21,3 +24,7 @@ if not GOOGLE_API_KEY:
 if not TAVILY_API_KEY:
     print("⚠️  Warning: TAVILY_API_KEY not found. Web search capabilities will be disabled.")
     print("   Get your free API key from: https://tavily.com/")
+
+if not MEM0_API_KEY:
+    print("⚠️  Warning: MEM0_API_KEY not found. Persistent memory will be disabled.")
+    print("   Get your free API key from: https://mem0.ai/")
