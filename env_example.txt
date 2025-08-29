@@ -1,0 +1,13 @@
+# Google Gemini API Key - Get yours from https://makersuite.google.com/app/apikey
+GOOGLE_API_KEY=AIzaSyB8OdIrzUdNfIJm7r4UCrEx2ZOmBDdjiLM
+
+# Tavily Search API Key - Get yours from https://tavily.com/ (free tier available)
+# This enables web search capabilities for current information
+TAVILY_API_KEY=your_tavily_api_key_here
+
+# LangSmith API Key (optional) - Get yours from https://smith.langchain.com/
+# This is used for monitoring and debugging your LangGraph applications
+LANGSMITH_API_KEY=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
+LANGSMITH_PROJECT=athena-family-assistant
+
+# Copy this file to .env and replace the placeholder values with your actual API keys
