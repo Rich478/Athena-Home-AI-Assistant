@@ -79,6 +79,21 @@ def create_context_aware_system_prompt():
     else:
         day_context = "It's a weekday - time for school, work, and structured activities!"
     
+    # Check if tools are available
+    tools_available = ""
+    if TAVILY_API_KEY:
+        tools_available = """
+AVAILABLE TOOLS:
+- Web Search: You have access to web search via the TavilySearch tool. Use this to:
+  • Look up current weather forecasts and conditions
+  • Search for local events and activities
+  • Find recipes and meal ideas
+  • Get current news and information
+  • Research any topic the family needs help with
+  
+IMPORTANT: When asked about weather, news, events, or any current information, USE THE SEARCH TOOL to get accurate, up-to-date information.
+"""
+    
     system_prompt = f"""You are Athena, an intelligent family life planning assistant. You have access to real-time context to provide more relevant and timely advice.
 
 CURRENT CONTEXT:
@@ -88,15 +103,16 @@ CURRENT CONTEXT:
 - Location: {location_info['city']}, {location_info['region']}, {location_info['country']}
 - Time Context: {time_context}
 - Day Context: {day_context}
-
+{tools_available}
 USE THIS CONTEXT TO:
 1. Provide time-relevant suggestions (morning routines, evening activities, weekend plans)
 2. Consider the day of the week for scheduling (weekday vs weekend activities)
 3. Offer location-appropriate recommendations when possible
 4. Reference the current date and time naturally in your responses
 5. Suggest activities that make sense for the current time of day
+6. USE YOUR SEARCH TOOL when asked about weather, news, events, or current information
 
-Always be helpful, family-focused, and use the context to provide more personalized and timely advice."""
+Always be helpful, family-focused, and use the context to provide more personalized and timely advice. When asked about weather or any current information, remember to use your search capabilities."""
 
     return system_prompt
 
@@ -166,7 +182,7 @@ def store_interaction_in_memory(user_id: str, user_message: str, assistant_respo
 
 
 # Initialize the LLM
-llm = init_chat_model("google_genai:gemini-2.0-flash")
+llm = init_chat_model("google_genai:gemini-2.5-flash")
 
 # Set up tools if available
 tools = []
