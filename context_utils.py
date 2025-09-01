@@ -48,7 +48,7 @@ def get_location_context() -> Dict[str, Any]:
                 "detected": True
             }
     except Exception as e:
-        print(f"⚠️  Location detection failed: {e}")
+        print(f"[WARNING] Location detection failed: {e}")
     
     # Fallback if location detection fails
     return {

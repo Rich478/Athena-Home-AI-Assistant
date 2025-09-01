@@ -1,7 +1,17 @@
-# Environment variables
+# Athena AI Assistant - Environment & Secrets
 .env
 .env.local
-.env.*.local
+.env.production
+.env.staging
+*.key
+secrets.json
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+athena_users.db
+test_athena_users.db
 
 # Python
 __pycache__/
@@ -21,26 +31,63 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
 
-# Virtual environments
-venv/
+# Virtual Environments
+.env
+.venv
 env/
+venv/
 ENV/
 env.bak/
 venv.bak/
+.python-version
 
-# IDE
+# IDE & Editor Files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.DS_Store
+Thumbs.db
 
-# OS
+# Testing
+.coverage
+.pytest_cache/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# LangGraph & LangSmith
+.langgraph_api/
+.langsmith/
+langsmith_traces/
+.langchain.db
+
+# Claude Code
+.claude/
+
+# Logs
+*.log
+logs/
+log/
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# OS Generated Files
 .DS_Store
 .DS_Store?
 ._*
@@ -49,9 +96,33 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# LangSmith
-.langchain.db
+# Backup Files
+*.bak
+*.backup
+*~
 
-# Logs
-*.log
-logs/
+# User Data (Privacy Protection)
+user_data/
+conversations/
+memories/
+
+# Development & Testing
+test_output/
+debug_logs/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Service Files
+*.pid
+
+# SSL Certificates
+*.pem
+*.crt
+*.cert
+
+# Configuration Overrides
+config.local.py
+settings.local.py

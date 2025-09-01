@@ -22,9 +22,9 @@ if not GOOGLE_API_KEY:
     raise ValueError("GOOGLE_API_KEY environment variable is required. Please set it in your .env file.")
 
 if not TAVILY_API_KEY:
-    print("⚠️  Warning: TAVILY_API_KEY not found. Web search capabilities will be disabled.")
+    print("[WARNING] TAVILY_API_KEY not found. Web search capabilities will be disabled.")
     print("   Get your free API key from: https://tavily.com/")
 
 if not MEM0_API_KEY:
-    print("⚠️  Warning: MEM0_API_KEY not found. Persistent memory will be disabled.")
+    print("[WARNING] MEM0_API_KEY not found. Persistent memory will be disabled.")
     print("   Get your free API key from: https://mem0.ai/")

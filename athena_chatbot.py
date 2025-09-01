@@ -41,12 +41,12 @@ if MEM0_API_KEY:
         # Suppress the specific mem0 deprecation warning
         warnings.filterwarnings("ignore", category=DeprecationWarning, module="mem0")
         mem0_client = MemoryClient(api_key=MEM0_API_KEY)
-        print("✅ Mem0 memory system initialized successfully!")
+        print("[SUCCESS] Mem0 memory system initialized successfully!")
     except ImportError:
-        print("⚠️  Mem0 library not installed. Run: pip install mem0ai")
+        print("[WARNING] Mem0 library not installed. Run: pip install mem0ai")
         mem0_client = None
     except Exception as e:
-        print(f"⚠️  Failed to initialize Mem0: {e}")
+        print(f"[WARNING] Failed to initialize Mem0: {e}")
         mem0_client = None
 
 class State(TypedDict):
@@ -243,7 +243,7 @@ def create_memory_enhanced_system_prompt(user_id: str, base_prompt: str, user_me
             print(f"[DEBUG] Final prompt length: {len(final_prompt)} chars")
         return final_prompt
     except Exception as e:
-        print(f"⚠️  Memory retrieval failed: {e}")
+        print(f"[WARNING] Memory retrieval failed: {e}")
         if DEBUG_MODE:
             import traceback
             print(f"[DEBUG] Traceback: {traceback.format_exc()}")
@@ -263,7 +263,7 @@ def store_interaction_in_memory(user_id: str, user_message: str, assistant_respo
         ]
         mem0_client.add(messages, user_id=user_id)
     except Exception as e:
-        print(f"⚠️  Failed to store memory: {e}")
+        print(f"[WARNING] Failed to store memory: {e}")
 
 # Initialize the graph
 graph_builder = StateGraph(State)
@@ -410,31 +410,31 @@ def stream_graph_updates(user_input: str, config: dict, user_id: str):
 
 def run_chatbot():
     """Run the interactive chatbot with memory support."""
-    print("🤖 Welcome to Athena - Your Family Life Planning Assistant!")
+    print("[ATHENA] Welcome to Athena - Your Family Life Planning Assistant!")
     print("I'm here to help you plan and organize your family's life.")
     
     if DEBUG_MODE:
-        print("🔧 DEBUG MODE ENABLED - Verbose output for troubleshooting")
+        print("[DEBUG] DEBUG MODE ENABLED - Verbose output for troubleshooting")
     
     if mem0_client:
-        print("🧠 Persistent memory enabled - I'll learn and remember things about your family!")
+        print("[INFO] Persistent memory enabled - I'll learn and remember things about your family!")
     else:
-        print("💾 Session memory only - Get a Mem0 API key for persistent learning across sessions")
+        print("[INFO] Session memory only - Get a Mem0 API key for persistent learning across sessions")
     
     # Display current context
     time_info = get_current_time_and_date()
     location_info = get_location_context()
     
-    print(f"📅 Current Context:")
+    print(f"[CONTEXT] Current Context:")
     print(f"   Date: {time_info['current_date']}")
     print(f"   Time: {time_info['current_time']}")
     print(f"   Location: {location_info['city']}, {location_info['region']}")
     print(f"   Day: {time_info['day_of_week']}")
     
     if TAVILY_API_KEY:
-        print("🔍 Web search enabled - I can find current information for you!")
+        print("[INFO] Web search enabled - I can find current information for you!")
     else:
-        print("⚠️  Web search disabled - Get a free Tavily API key to enable current information search")
+        print("[WARNING] Web search disabled - Get a free Tavily API key to enable current information search")
     
     print("Type 'quit', 'exit', or 'q' to end our conversation.")
     print("Type 'new' to start a fresh conversation thread.")
@@ -443,32 +443,32 @@ def run_chatbot():
     
     # Generate a unique user ID for this family (you can customize this)
     user_id = "athena_family_001"  # You can make this configurable
-    print(f"👧‍👦 Family ID: {user_id}")
+    print(f"[INFO] Family ID: {user_id}")
     
     # Generate a unique thread ID for this conversation session
     thread_id = str(uuid.uuid4())
     config = {"configurable": {"thread_id": thread_id}}
     
-    print(f"🔗 Conversation Thread: {thread_id[:8]}...\n")
+    print(f"[INFO] Conversation Thread: {thread_id[:8]}...\n")
     
     while True:
         try:
             user_input = input("You: ")
             if user_input.lower() in ["quit", "exit", "q"]:
-                print("👋 Thank you for using Athena! I'll remember our conversation for next time!")
+                print("[GOODBYE] Thank you for using Athena! I'll remember our conversation for next time!")
                 break
             elif user_input.lower() == "new":
                 # Start a new conversation thread
                 thread_id = str(uuid.uuid4())
                 config = {"configurable": {"thread_id": thread_id}}
-                print(f"✨ Started new conversation thread: {thread_id[:8]}...")
-                print("🔄 Fresh start - but I'll still remember your family preferences!")
+                print(f"[NEW] Started new conversation thread: {thread_id[:8]}...")
+                print("[INFO] Fresh start - but I'll still remember your family preferences!")
                 continue
             elif user_input.lower() == "memory":
                 # Show memory state for debugging
                 snapshot = graph.get_state(config)
-                print(f"📊 Session Memory: {len(snapshot.values.get('messages', []))} messages stored")
-                print(f"🆔 Thread ID: {thread_id}")
+                print(f"[MEMORY] Session Memory: {len(snapshot.values.get('messages', []))} messages stored")
+                print(f"[INFO] Thread ID: {thread_id}")
                 if mem0_client:
                     try:
                         memories = mem0_client.get_all(user_id=user_id)
@@ -483,17 +483,17 @@ def run_chatbot():
                                 mem_list = []
                             
                             if mem_list:
-                                print(f"🧠 Persistent Memories: {len(mem_list)} stored")
+                                print(f"[MEMORY] Persistent Memories: {len(mem_list)} stored")
                                 print("All memories:")
                                 for i, memory in enumerate(mem_list):
                                     memory_text = memory.get('memory', memory.get('text', str(memory)))
                                     print(f"  {i+1}. {memory_text}")
                             else:
-                                print("🧠 No persistent memories stored yet.")
+                                print("[MEMORY] No persistent memories stored yet.")
                         else:
                             print("🧠 No persistent memories stored yet.")
                     except Exception as e:
-                        print(f"⚠️  Could not retrieve memories: {e}")
+                        print(f"[WARNING] Could not retrieve memories: {e}")
                         if DEBUG_MODE:
                             import traceback
                             print(f"[DEBUG] Traceback: {traceback.format_exc()}")
@@ -525,14 +525,14 @@ def run_chatbot():
             stream_graph_updates(user_input, config, user_id)
             print()  # Add spacing between exchanges
         except KeyboardInterrupt:
-            print("\n👋 Goodbye! Thanks for using Athena!")
+            print("\n[GOODBYE] Goodbye! Thanks for using Athena!")
             break
         except Exception as e:
-            print(f"❌ An error occurred: {e}")
+            print(f"[ERROR] An error occurred: {e}")
             print("Please try again or type 'quit' to exit.")
 
 if __name__ == "__main__":
     # Show usage hint if debug mode is not enabled
     if not DEBUG_MODE:
-        print("💡 Tip: Run with -debug flag for troubleshooting (python athena_chatbot.py -debug)")
+        print("[TIP] Run with -debug flag for troubleshooting (python athena_chatbot.py -debug)")
     run_chatbot()

@@ -1,0 +1,7 @@
+{
+  "dependencies": ["./athena_agent"],
+  "graphs": {
+    "athena": "./athena_agent/agent.py:graph"
+  },
+  "env": ".env"
+}
