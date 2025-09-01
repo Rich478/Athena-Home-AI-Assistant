@@ -304,7 +304,7 @@ Athena leverages the **LangGraph Platform** for enterprise-grade performance:
 
 ### Technology Stack
 
-- **🧠 AI Model**: Google Gemini 2.0 Flash (fast, intelligent responses)
+- **🧠 AI Model**: Google Gemini 2.5 Flash (fast, intelligent responses)
 - **🔧 Framework**: LangGraph Platform (enterprise AI orchestration)  
 - **💾 Memory**: Mem0 (persistent conversation memory)
 - **🔍 Search**: Tavily API (real-time web information)
